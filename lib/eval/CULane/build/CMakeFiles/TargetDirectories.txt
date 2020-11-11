@@ -1,0 +1,3 @@
+/home/zns/Codes/SCNN_Pytorch/utils/lane_evaluation/CULane/build/CMakeFiles/rebuild_cache.dir
+/home/zns/Codes/SCNN_Pytorch/utils/lane_evaluation/CULane/build/CMakeFiles/evaluate.dir
+/home/zns/Codes/SCNN_Pytorch/utils/lane_evaluation/CULane/build/CMakeFiles/edit_cache.dir

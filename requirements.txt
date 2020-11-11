@@ -1,0 +1,7 @@
+opencv-python==4.2.0.32
+albumentations
+onnx-simplifier
+PyYAML
+tensorboard
+tqdm
+prefetch-generator

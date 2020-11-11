@@ -1,0 +1,10 @@
+*.idea
+*.onnx
+*.rknn
+*.pyc
+*.tar
+*.gz
+*.pt
+__pycache__
+checkpoints
+pretrain
