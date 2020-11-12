@@ -21,7 +21,12 @@ class LaneLossS(nn.Module):
         bce_loss = self.bce_loss(exist_codes, exist_lbl)
         loss = focal_loss + iou_loss + 0.1 * bce_loss
 
-        return loss
+        return {
+            "loss": loss,
+            "focal_loss": focal_loss,
+            "iou_loss": iou_loss,
+            "bce_loss": bce_loss
+        }
 
 
 class LaneLoss(nn.Module):
@@ -37,9 +42,14 @@ class LaneLoss(nn.Module):
         focal_loss = self.focal_loss(seg_maps, seg_lbl)
         iou_loss = self.soft_miou_loss(seg_maps, seg_lbl)
         bce_loss = self.bce_loss(exist_codes, exist_lbl)
-        loss = focal_loss +  iou_loss + 0.1 * bce_loss
+        loss = focal_loss + iou_loss + 0.1 * bce_loss
 
-        return loss
+        return {
+            "loss": loss,
+            "focal_loss": focal_loss,
+            "iou_loss": iou_loss,
+            "bce_loss": bce_loss
+        }
 
 
 class SoftIoULoss(nn.Module):

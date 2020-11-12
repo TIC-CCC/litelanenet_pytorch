@@ -98,18 +98,23 @@ class PipeLine(object):
             outputs = self.net(img)
 
             # compute losses
-            loss = self.loss_fn(outputs, [seg_lbl, exist_lbl])
+            losses = self.loss_fn(outputs, [seg_lbl, exist_lbl])
 
             # back propagation
             self.optimizer.zero_grad()
-            loss.backward()
+            losses["loss"].backward()
             self.optimizer.step()
 
             # 记录训练信息
             progress_bar.set_description('TRAIN -> Step: {}. lr: {:.8f}. Loss: {:.5f}.'.
-                                         format(self.step, self.optimizer.param_groups[-1]['lr'], loss.item()))
+                                         format(self.step,
+                                                self.optimizer.param_groups[-1]['lr'],
+                                                losses["loss"].item()))
             if self.step % 500 == 0:
-                self.tb_logger.add_scalar('info/loss', loss, self.step)
+                self.tb_logger.add_scalar('info/loss', losses["loss"], self.step)
+                self.tb_logger.add_scalar('info/focal_loss', losses["focal_loss"], self.step)
+                self.tb_logger.add_scalar('info/iou_loss', losses["iou_loss"], self.step)
+                self.tb_logger.add_scalar('info/bce_loss', losses["bce_loss"], self.step)
                 self.tb_logger.add_scalar('info/lr', self.optimizer.param_groups[-1]['lr'], self.step)
 
             # 更新迭代次数

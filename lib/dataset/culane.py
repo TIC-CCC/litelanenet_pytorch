@@ -95,7 +95,6 @@ class CULane(data.Dataset):
 
 
 if __name__ == '__main__':
-    txt_path = '/home/zns/Disk2T/lane/culane/list/train_gt.txt'
-    dataset = CULane(txt_path, is_train=True)
-    for i in range(500):
-        print(dataset[i][2])
+    txt_path = '/home/zns/dataset/lane/culane'
+    dataset = CULane(txt_path, is_train=False)
+    print(len(dataset))

@@ -6,10 +6,10 @@ import torch
 import torch.utils.data as data
 import torchvision.transforms as transforms
 
-__all__ = ["CULaneS4"]
+__all__ = ["CULaneDiv8"]
 
 
-class CULaneS4(data.Dataset):
+class CULaneDiv8(data.Dataset):
     num_class = 5
 
     def __init__(self, data_root, is_train=True):
@@ -28,7 +28,7 @@ class CULaneS4(data.Dataset):
             self.transforms = Compose([
                 RandomBrightnessContrast(),
                 MotionBlur(blur_limit=5, p=0.2),
-                ShiftScaleRotate(shift_limit=0.05, scale_limit=0.05, rotate_limit=5, border_mode=cv2.BORDER_CONSTANT)
+                ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1, rotate_limit=5, border_mode=cv2.BORDER_CONSTANT)
             ])
 
     def __getitem__(self, index):
@@ -42,13 +42,9 @@ class CULaneS4(data.Dataset):
         if self.is_train:
             img, label, exist_code = self._transform(img, label, exist_code)
 
-        l = int((800 - 512) / 2)
-        img = img[int(1./3.*288.):, l:800-l]
-        label = label[int(1./3.*288.):, l:800-l]
-
         debug = False
         if debug:
-            show_label = cv2.applyColorMap(120 * label, cv2.COLORMAP_JET)
+            show_label = cv2.applyColorMap(50 * label, cv2.COLORMAP_JET)
             img = cv2.addWeighted(img, 0.8, show_label, 0.2, 0)
             cv2.imshow('label', img)
             cv2.waitKey()
@@ -89,7 +85,9 @@ class CULaneS4(data.Dataset):
         with open(self.txt_path, 'r') as f:
             lines = f.readlines()
         indexes = []
-        for line in lines:
+        for i, line in enumerate(lines):
+            if i % 8 != 0:
+                continue
             img_path, label_path = line[:-9].split(' ')
             mask_code = line[-9:-1]
             image_path = os.path.join(self.data_root, img_path[1:])
@@ -99,7 +97,6 @@ class CULaneS4(data.Dataset):
 
 
 if __name__ == '__main__':
-    txt_path = '/mnt/fc358c50-9af7-4158-9ca0-cf40129e74ec/lane/culane'
-    dataset = CULaneS4(txt_path, is_train=True)
-    for i in range(500):
-        print(dataset[i][2])
+    txt_path = '/home/zns/dataset/lane/culane'
+    dataset = CULaneDiv8(txt_path, is_train=False)
+    print(len(dataset))

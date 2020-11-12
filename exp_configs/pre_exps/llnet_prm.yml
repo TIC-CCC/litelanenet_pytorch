@@ -1,14 +1,14 @@
 # experience name
-save_root: /home/zns/Codes/llnet
-exp_name: llnet_crd_prm
+save_root: /home/zns/Codes/litelanenet_pytorch
+exp_name: llnet_prm-culane_div8
 
 # model
-model_type: llnet_crd_prm
+model_type: llnet_prm
 pretrain_model:
 checkpoint:
 
 # data_loader
-dataset_type: CULane
+dataset_type: CULaneDiv8
 data_root: /home/zns/dataset/lane/culane
 batch_size: 12
 num_workers: 6
@@ -23,4 +23,4 @@ momentum: 0.9
 epochs: 50
 check_interval: 1
 warmup_steps: 1000
-lr_decay_steps: [25, 45]
+lr_decay_steps: [25, 40]

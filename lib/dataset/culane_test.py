@@ -40,7 +40,6 @@ class CULaneTest(data.Dataset):
 
 
 if __name__ == '__main__':
-    data_root = '/home/zns/Disk2T/lane/culane'
-    dataset = CULaneTest(data_root)
-    for i in range(10):
-        print(dataset[i])
+    txt_path = '/home/zns/dataset/lane/culane'
+    dataset = CULaneTest(txt_path)
+    print(len(dataset))
